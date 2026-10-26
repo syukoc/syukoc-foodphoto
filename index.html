@@ -289,7 +289,11 @@
     max-width: 220px;
     text-align: right;
     line-height: 1.7;
+    word-break: keep-all;
+    text-wrap: pretty;
   }
+
+  .nb { white-space: nowrap; }
 
   /* Masonry grid */
   .gallery {
@@ -390,6 +394,8 @@
   .about-body {
     font-size: 0.9rem;
     line-height: 2;
+    letter-spacing: -0.01em;
+    text-wrap: pretty;
     color: rgba(245,240,232,0.65);
     margin-bottom: 2.5rem;
   }
@@ -526,7 +532,7 @@
       <div class="section-label">Portfolio</div>
       <h2 class="portfolio-title">Selected<br><em>Works</em></h2>
     </div>
-    <p class="portfolio-note">レストラン・食品ブランド・雑誌媒体向けのコマーシャル＆エディトリアル撮影。</p>
+    <p class="portfolio-note">レストラン・食品ブランド・雑誌媒体向けのコマーシャル＆<span class="nb">エディトリアル撮影。</span></p>
   </div>
   <div class="gallery reveal" id="gallery"></div>
 </section>
@@ -544,8 +550,8 @@
       料理が持つ<br><em>表情</em>を、光で。
     </h2>
     <p class="about-body">
-      奥村昌弘（おくむらまさひろ）。名古屋を拠点に活動するフード専門カメラマン。<br><br>
-      レストラン、食品メーカー、料理雑誌など多岐にわたるクライアントに向け、料理の持つ情感・質感・温度感を光と構図で表現することを専門としています。MUSE Photography Awards、European Photography Awards、London Photography Awardsでのゴールド受賞をはじめ、国内外のアワードで10を超える受賞歴を持ち、食の視覚表現において高い評価を得ています。<br><br>
+      奥村昌弘（おくむらまさひろ）。名古屋を拠点に活動するフード<span class="nb">専門カメラマン。</span><br><br>
+      レストラン、食品メーカー、料理雑誌など多岐にわたるクライアントに向け、料理の持つ情感・質感・温度感を光と構図で表現することを専門としています。MUSE Photography Awards、European Photography Awards、London Photography Awardsでのゴールド受賞をはじめ、国内外のアワードで10を超える受賞歴を持ち、食の視覚表現において高い評価を<span class="nb">得ています。</span><br><br>
       一枚の写真が、ブランドの価値を変える。その信念を胸に、妥協のないビジュアルをお届けします。
     </p>
     <div class="about-stats">
