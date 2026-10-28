@@ -3,7 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>syukoc.foodphoto — 奥村昌弘 Food Photographer</title>
+<title>Masahiro Okumura — Food Photographer in Nagoya, Japan | syukoc.foodphoto</title>
+<meta name="description" content="Portfolio of Masahiro Okumura (syukoc), a food photographer based in Nagoya, Japan. Still life and culinary photography in chiaroscuro light. Gold winner — MUSE, European and London Photography Awards.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://photo.syukoc.net/">
+<meta property="og:title" content="Masahiro Okumura — Food Photographer in Nagoya, Japan">
+<meta property="og:description" content="Still life and culinary photography in chiaroscuro light. Portfolio of Nagoya-based food photographer syukoc.">
+<meta property="og:image" content="https://photo.syukoc.net/images/04-strawberry-still-life.jpg">
+<meta name="twitter:card" content="summary_large_image">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -596,10 +603,10 @@
 <section class="hero">
   <div class="hero-bg"></div>
   <div class="hero-image-grid">
-    <div class="hero-img"><img src="images/03-artisan-sourdough.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
-    <div class="hero-img"><img src="images/01-souffle-cheesecake.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
-    <div class="hero-img"><img src="images/04-strawberry-still-life.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
-    <div class="hero-img"><img src="images/08-chocolate-eclair.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+    <div class="hero-img"><img src="images/03-artisan-sourdough.jpg" alt="Artisan Sourdough — food photography by Masahiro Okumura" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+    <div class="hero-img"><img src="images/01-souffle-cheesecake.jpg" alt="Soufflé Cheesecake — food photography by Masahiro Okumura" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+    <div class="hero-img"><img src="images/04-strawberry-still-life.jpg" alt="Strawberry Still Life — food photography by Masahiro Okumura" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+    <div class="hero-img"><img src="images/08-chocolate-eclair.jpg" alt="Chocolate Éclair — food photography by Masahiro Okumura" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
   </div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
@@ -635,7 +642,7 @@
 <section id="about">
   <div class="about-visual reveal">
     <div class="about-accent"></div>
-    <img src="portrait.jpg" alt="奥村昌弘 — フードフォトグラファー" style="width:100%;height:auto;display:block">
+    <img src="portrait.jpg" alt="Masahiro Okumura — food photographer based in Nagoya, Japan" style="width:100%;height:auto;display:block">
     <div class="about-accent2"></div>
   </div>
   <div class="about-content reveal">
@@ -814,7 +821,7 @@ function drawGallery() {
     div.className = 'gallery-item';
     var img = document.createElement('img');
     img.src = item.src;
-    img.alt = item.label;
+    img.alt = item.label + ' — food photography by Masahiro Okumura (syukoc)';
     img.style.cssText = 'width:100%;display:block;object-fit:cover;';
     var overlay = document.createElement('div');
     overlay.className = 'gallery-overlay';
