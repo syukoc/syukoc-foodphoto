@@ -597,6 +597,12 @@
   .portfolio-title { font-size: clamp(2.6rem, 5.5vw, 4.2rem); letter-spacing: 0.04em; }
   .logo-img { height: 46px; }
   @media (max-width: 760px) { .logo-img { height: 34px; } }
+  /* Gallery focus effect: dim by default, hovered photo lights up, caption fades out */
+  .gallery-overlay { opacity: 1; background: linear-gradient(to top, rgba(10,10,10,0.55), transparent 45%); }
+  .gallery-item:hover .gallery-overlay { opacity: 0; }
+  .gallery-item img { filter: brightness(0.6); transition: filter 0.6s ease, transform 1.2s cubic-bezier(.19,1,.22,1); }
+  .gallery-item:hover img { filter: brightness(1); }
+  @media (hover: none) { .gallery-item img { filter: none; } }
 </style>
 </head>
 <body>
