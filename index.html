@@ -606,6 +606,19 @@
   .gallery-item img { filter: brightness(0.6); transition: filter 0.6s ease, transform 1.2s cubic-bezier(.19,1,.22,1); }
   .gallery-item:hover img { filter: brightness(1); }
   @media (hover: none) { .gallery-item img { filter: none; } }
+  /* Lightbox */
+  .lightbox { position: fixed; inset: 0; z-index: 200; background: rgba(5,5,5,0.94); display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.35s ease; }
+  .lightbox.open { opacity: 1; pointer-events: auto; }
+  .lightbox img { max-width: 92vw; max-height: 82vh; object-fit: contain; display: block; }
+  .lightbox-caption { margin-top: 1.25rem; text-align: center; }
+  .lightbox-title { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.4rem; color: var(--cream); }
+  .lightbox-tag { font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-top: 0.35rem; }
+  .lightbox-btn { position: absolute; background: none; border: none; color: var(--cream); opacity: 0.65; cursor: pointer; font-family: 'Cormorant Garamond', serif; transition: opacity 0.3s, color 0.3s; }
+  .lightbox-btn:hover { opacity: 1; color: var(--gold); }
+  .lightbox-close { top: 1.5rem; right: 2rem; font-size: 2.2rem; line-height: 1; }
+  .lightbox-prev { left: 1.5rem; top: 50%; transform: translateY(-50%); font-size: 3rem; }
+  .lightbox-next { right: 1.5rem; top: 50%; transform: translateY(-50%); font-size: 3rem; }
+  @media (max-width: 760px) { .lightbox-prev { left: 0.5rem; } .lightbox-next { right: 0.5rem; } .lightbox-close { right: 1rem; } }
 </style>
 </head>
 <body>
@@ -855,6 +868,36 @@ function drawGallery() {
     div.appendChild(overlay);
     gallery.appendChild(div);
   });
+
+  /* ─── Lightbox ─── */
+  var lb = document.getElementById('lightbox');
+  var lbImg = document.getElementById('lbImg');
+  var lbTitle = document.getElementById('lbTitle');
+  var lbTag = document.getElementById('lbTag');
+  var lbIndex = 0;
+  function lbShow(i) {
+    lbIndex = (i + galleryItems.length) % galleryItems.length;
+    var it = galleryItems[lbIndex];
+    lbImg.src = it.src;
+    lbImg.alt = it.label + ' — food photography by Masahiro Okumura (syukoc)';
+    lbTitle.textContent = it.label;
+    lbTag.textContent = it.tag;
+  }
+  function lbOpen(i) { lbShow(i); lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; }
+  function lbCloseFn() { lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; }
+  gallery.querySelectorAll('.gallery-item').forEach(function(el, i) {
+    el.addEventListener('click', function() { lbOpen(i); });
+  });
+  document.getElementById('lbClose').addEventListener('click', lbCloseFn);
+  document.getElementById('lbPrev').addEventListener('click', function(e) { e.stopPropagation(); lbShow(lbIndex - 1); });
+  document.getElementById('lbNext').addEventListener('click', function(e) { e.stopPropagation(); lbShow(lbIndex + 1); });
+  lb.addEventListener('click', function(e) { if (e.target === lb) lbCloseFn(); });
+  document.addEventListener('keydown', function(e) {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') lbCloseFn();
+    if (e.key === 'ArrowLeft') lbShow(lbIndex - 1);
+    if (e.key === 'ArrowRight') lbShow(lbIndex + 1);
+  });
 }
 
 function drawFoodScene(canvas, scheme, seed) {
@@ -959,5 +1002,15 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
 </script>
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button class="lightbox-btn lightbox-close" id="lbClose" aria-label="Close">&times;</button>
+  <button class="lightbox-btn lightbox-prev" id="lbPrev" aria-label="Previous">&#8249;</button>
+  <img id="lbImg" src="" alt="">
+  <button class="lightbox-btn lightbox-next" id="lbNext" aria-label="Next">&#8250;</button>
+  <div class="lightbox-caption">
+    <div class="lightbox-title" id="lbTitle"></div>
+    <div class="lightbox-tag" id="lbTag"></div>
+  </div>
+</div>
 </body>
 </html>
