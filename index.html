@@ -619,6 +619,20 @@
   .lightbox-prev { left: 1.5rem; top: 50%; transform: translateY(-50%); font-size: 3rem; }
   .lightbox-next { right: 1.5rem; top: 50%; transform: translateY(-50%); font-size: 3rem; }
   @media (max-width: 760px) { .lightbox-prev { left: 0.5rem; } .lightbox-next { right: 0.5rem; } .lightbox-close { right: 1rem; } }
+  /* Awards */
+  .awards { margin-top: 2.5rem; }
+  .awards-label { font-size: 0.62rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+  .awards-list { list-style: none; }
+  .awards-list li { display: flex; align-items: baseline; gap: 1rem; padding: 0.55rem 0; border-bottom: 1px solid rgba(201,168,76,0.14); }
+  .aw-year { font-size: 0.7rem; letter-spacing: 0.15em; color: var(--gold); min-width: 2.6rem; }
+  .aw-name { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--cream); flex: 1; }
+  .aw-result { font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); }
+  /* Gallery filters */
+  .gallery-filters { display: flex; flex-wrap: wrap; gap: 0.5rem 1.75rem; margin: 0 0 2rem; }
+  .filter-btn { background: none; border: none; padding: 0.25rem 0; font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--cream); opacity: 0.45; cursor: pointer; transition: opacity 0.3s, color 0.3s; }
+  .filter-btn:hover { opacity: 0.85; }
+  .filter-btn.active { opacity: 1; color: var(--gold); }
+  .gallery-item.hidden { display: none; }
 </style>
 </head>
 <body>
@@ -663,6 +677,16 @@
     </div>
     <p class="portfolio-note">レストラン・食品ブランド・雑誌媒体向けのコマーシャル＆<span class="nb">エディトリアル撮影。</span></p>
   </div>
+  <div class="gallery-filters" id="galleryFilters">
+    <button class="filter-btn active" data-filter="All">All</button>
+    <button class="filter-btn" data-filter="Fine Dining">Fine Dining</button>
+    <button class="filter-btn" data-filter="Editorial">Editorial</button>
+    <button class="filter-btn" data-filter="Commercial">Commercial</button>
+    <button class="filter-btn" data-filter="Bakery">Bakery</button>
+    <button class="filter-btn" data-filter="Restaurant">Restaurant</button>
+    <button class="filter-btn" data-filter="Japanese">Japanese</button>
+    <button class="filter-btn" data-filter="Confection">Confection</button>
+  </div>
   <div class="gallery" id="gallery"></div>
 </section>
 
@@ -696,6 +720,20 @@
         <span class="stat-num">Food</span>
         <span class="stat-label">専門分野</span>
       </div>
+    </div>
+    <div class="awards">
+      <div class="awards-label">Selected Awards</div>
+      <ul class="awards-list">
+        <li><span class="aw-year">2025</span><span class="aw-name">London Photography Awards</span><span class="aw-result">Gold</span></li>
+        <li><span class="aw-year">2025</span><span class="aw-name">European Photography Awards</span><span class="aw-result">Gold</span></li>
+        <li><span class="aw-year">2025</span><span class="aw-name">Global Photography Awards</span><span class="aw-result">Silver</span></li>
+        <li><span class="aw-year">2025</span><span class="aw-name">1839 Awards — Still Life</span><span class="aw-result">Silver</span></li>
+        <li><span class="aw-year">2024</span><span class="aw-name">MUSE Photography Awards</span><span class="aw-result">Gold</span></li>
+        <li><span class="aw-year">2024</span><span class="aw-name">European Photography Awards</span><span class="aw-result">Gold</span></li>
+        <li><span class="aw-year">2024</span><span class="aw-name">Global Photography Awards</span><span class="aw-result">Silver</span></li>
+        <li><span class="aw-year">2024</span><span class="aw-name">reFocus Awards — Photographer of the Year</span><span class="aw-result">Silver</span></li>
+        <li><span class="aw-year">2023</span><span class="aw-name">FPA Professional Food Photography Award</span><span class="aw-result">Bronze</span></li>
+      </ul>
     </div>
     <div class="about-signature">Masahiro Okumura</div>
     <div class="about-cta">
@@ -869,34 +907,56 @@ function drawGallery() {
     gallery.appendChild(div);
   });
 
+  /* ─── Gallery filters ─── */
+  var filterBtns = document.querySelectorAll('.filter-btn');
+  filterBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      filterBtns.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var f = btn.getAttribute('data-filter');
+      gallery.querySelectorAll('.gallery-item').forEach(function(el, i) {
+        el.classList.toggle('hidden', f !== 'All' && galleryItems[i].tag !== f);
+      });
+    });
+  });
+
   /* ─── Lightbox ─── */
   var lb = document.getElementById('lightbox');
   var lbImg = document.getElementById('lbImg');
   var lbTitle = document.getElementById('lbTitle');
   var lbTag = document.getElementById('lbTag');
-  var lbIndex = 0;
-  function lbShow(i) {
-    lbIndex = (i + galleryItems.length) % galleryItems.length;
-    var it = galleryItems[lbIndex];
+  var lbPos = 0;
+  function lbVisible() {
+    var vis = [];
+    gallery.querySelectorAll('.gallery-item').forEach(function(el, i) {
+      if (!el.classList.contains('hidden')) vis.push(i);
+    });
+    return vis;
+  }
+  function lbShow(pos) {
+    var vis = lbVisible();
+    if (!vis.length) return;
+    lbPos = (pos + vis.length) % vis.length;
+    var it = galleryItems[vis[lbPos]];
     lbImg.src = it.src;
     lbImg.alt = it.label + ' — food photography by Masahiro Okumura (syukoc)';
     lbTitle.textContent = it.label;
     lbTag.textContent = it.tag;
   }
-  function lbOpen(i) { lbShow(i); lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; }
+  function lbOpen(itemIndex) { lbShow(lbVisible().indexOf(itemIndex)); lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; }
   function lbCloseFn() { lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; }
   gallery.querySelectorAll('.gallery-item').forEach(function(el, i) {
     el.addEventListener('click', function() { lbOpen(i); });
   });
   document.getElementById('lbClose').addEventListener('click', lbCloseFn);
-  document.getElementById('lbPrev').addEventListener('click', function(e) { e.stopPropagation(); lbShow(lbIndex - 1); });
-  document.getElementById('lbNext').addEventListener('click', function(e) { e.stopPropagation(); lbShow(lbIndex + 1); });
+  document.getElementById('lbPrev').addEventListener('click', function(e) { e.stopPropagation(); lbShow(lbPos - 1); });
+  document.getElementById('lbNext').addEventListener('click', function(e) { e.stopPropagation(); lbShow(lbPos + 1); });
   lb.addEventListener('click', function(e) { if (e.target === lb) lbCloseFn(); });
   document.addEventListener('keydown', function(e) {
     if (!lb.classList.contains('open')) return;
     if (e.key === 'Escape') lbCloseFn();
-    if (e.key === 'ArrowLeft') lbShow(lbIndex - 1);
-    if (e.key === 'ArrowRight') lbShow(lbIndex + 1);
+    if (e.key === 'ArrowLeft') lbShow(lbPos - 1);
+    if (e.key === 'ArrowRight') lbShow(lbPos + 1);
   });
 }
 
