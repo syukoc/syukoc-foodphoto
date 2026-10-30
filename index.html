@@ -585,6 +585,16 @@
     opacity: 1;
     transform: translateY(0);
   }
+
+  /* ── DESIGN REFRESH 2026-10 ── */
+  .hero-single { position:absolute; inset:0; overflow:hidden; }
+  .hero-single img { width:100%; height:100%; object-fit:cover; object-position:center 72%; display:block; animation: heroZoom 24s ease-in-out infinite alternate; }
+  @keyframes heroZoom { from { transform: scale(1); } to { transform: scale(1.08); } }
+  .hero-title { font-size: clamp(3.2rem, 8vw, 6rem); letter-spacing: 0.06em; line-height: 1.15; }
+  @media (min-width: 900px) { .gallery { columns: 2; column-gap: 10px; } .gallery-item { margin-bottom: 10px; } }
+  .gallery-item img { transition: transform 1.2s cubic-bezier(.19,1,.22,1); }
+  .gallery-item:hover img { transform: scale(1.04); }
+  .portfolio-title { font-size: clamp(2.6rem, 5.5vw, 4.2rem); letter-spacing: 0.04em; }
 </style>
 </head>
 <body>
@@ -602,19 +612,13 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-bg"></div>
-  <div class="hero-image-grid">
-    <div class="hero-img"><img src="images/03-artisan-sourdough.jpg" alt="Artisan Sourdough — food photography by Masahiro Okumura" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
-    <div class="hero-img"><img src="images/01-souffle-cheesecake.jpg" alt="Soufflé Cheesecake — food photography by Masahiro Okumura" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
-    <div class="hero-img"><img src="images/04-strawberry-still-life.jpg" alt="Strawberry Still Life — food photography by Masahiro Okumura" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
-    <div class="hero-img"><img src="images/08-chocolate-eclair.jpg" alt="Chocolate Éclair — food photography by Masahiro Okumura" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
-  </div>
+  <div class="hero-single"><img src="images/hero-pain-au-chocolat.jpg" alt="Pain au chocolat on a dark table — food photography by Masahiro Okumura (syukoc)"></div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <p class="hero-eyebrow">Food Photography — Nagoya</p>
     <h1 class="hero-title">
       光と影が<br>
-      <em>語る</em><br>
-      一皿。
+      <em>語る</em>一皿。
     </h1>
     <p class="hero-sub">
       名古屋を拠点に、料理の本質を光・構図・質感で捉えるフード専門カメラマン。レストラン、食品ブランド、出版メディアへのビジュアル制作。
